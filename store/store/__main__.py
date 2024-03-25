@@ -1,8 +1,10 @@
-from store import main
+from store import app
 import argparse
 import os
 
 
-if __name__ == '__main__':
-    main().start()
+def main():
+    app().start()
 
+if __name__ == '__main__':
+    main()

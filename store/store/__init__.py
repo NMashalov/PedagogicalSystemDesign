@@ -1,5 +1,5 @@
 from .settings import Store, StoreConfigs
 
-def main():
+def app():
     cfg = StoreConfigs() 
     return Store(cfg)

@@ -56,4 +56,4 @@ class ApiManager:
                 raise HTTPException(status_code=404, detail=f"No event with {record_id}")
             
     def start_api(self,port=1234):
-        uvicorn.run(self.app,port=port,log_level=logging.DEBUG)
+        uvicorn.run(self.app,port=port,log_level=logging.DEBUG,host='0.0.0.0')

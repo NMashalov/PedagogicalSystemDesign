@@ -1,5 +1,5 @@
 from store.db_model import Event, Type
-from store import main, Store
+from store import Store
 from sqlalchemy.orm import Session
 import pytest
 from fastapi.testclient import TestClient

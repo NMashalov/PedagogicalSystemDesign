@@ -2,7 +2,7 @@ import pytest
 import factory
 from store.db_model import Event, Type
 from sqlalchemy.orm import Session
-from store import main, Store
+from store import Store, app
 
 
 
@@ -24,8 +24,7 @@ class EventFactory(factory.alchemy.SQLAlchemyModelFactory):
 
 @pytest.fixture(scope="session")
 def start_app():
-    app = main()
-    return app
+    return app()
 
 @pytest.fixture(scope="session")
 def session_factory(start_app: Store):

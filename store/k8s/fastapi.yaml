@@ -29,7 +29,10 @@ spec:
     spec:
       containers:
       - name: web
-        image: mashalovne/score
+        image: store
+        imagePullPolicy: Never
+        command: ["/bin/sh"]
+        args: ["-c", "poetry run store"]
         ports:
         - containerPort: 8000
         envFrom:

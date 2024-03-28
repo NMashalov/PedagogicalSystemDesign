@@ -4,6 +4,8 @@ We will use standard k8s
 
 ```bash
 kubectl create namespace store-config
+# then switch context to
+kubectl config set-context --current --namespace=store-config
 ```
 
 **Cheat-code**
@@ -12,7 +14,7 @@ To enable ui use:
 
 ```bash
 minikube addons enable dashboard
-minikube dashboard --url  127.0.0.1:6060
+minikube dashboard --url  127.0.0.1:6060 &
 ```
 Then click on:
 ```bash
@@ -32,6 +34,14 @@ Check applied secrets
 kubectl describe secret fastapi-secret -n store-config
 ```
 
+Delete secret
+
+```bash
+kubectl delete secret fastapi-secret -n store-config
+```
+```bash
+kubectl rollout restart deployment fastapi-deployment -n store-config
+```
 ### Deploy
 
 Set local registry following https://stackoverflow.com/a/57535704/23813997 
@@ -104,6 +114,10 @@ Check hey
 ```bash
 hey -n 1000 -c 50 YOUR_URL
 ```
+
+### Expose app
+
+minikube service fastapi-service --namespace=store-config --url 127.0.0.1:4300
 
 
 ### Delete all

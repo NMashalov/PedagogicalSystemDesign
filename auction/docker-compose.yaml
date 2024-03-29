@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "store"
+      POSTGRES_USER: "store_admin"
+      POSTGRES_PASSWORD: "store_123"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - backnet
+
+  redis:
+    image: redis:13.3
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: my-password
+      REDIS_PORT: 6379
+      REDIS_DATABASES: 16
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - backnet

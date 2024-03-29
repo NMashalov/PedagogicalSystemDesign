@@ -3,7 +3,7 @@ import factory
 from store.db_model import Event, Type
 from sqlalchemy.orm import Session
 from store import Store, app
-
+from fastapi.testclient import TestClient
 
 
 class EventFactory(factory.alchemy.SQLAlchemyModelFactory):
@@ -47,3 +47,8 @@ def populate_event_table(session_factory: Session, event_fixture: list[Event]):
         event_fixture
     )
     session_factory.commit()
+
+
+@pytest.fixture(scope="session")
+def api_client(start_app: Store):
+    return TestClient(app=start_app.api.app)

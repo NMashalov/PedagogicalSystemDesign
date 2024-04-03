@@ -8,18 +8,17 @@ class ApiManager:
         self.app = FastAPI()
 
     def register_health(self):
-        @self.app.get('/health')
+        @self.app.get("/health")
         def health():
-            return {'Health': 'Ok!'}
-        
+            return {"Health": "Ok!"}
+
     def atomic_calls(self):
         pass
-        
-    def register_basic_routers():
-        Routers
-    
+
+    def register_basic_routers(r: Routers):
+        pass
+
     def register(self, *routers: BaseRouter):
 
         for router in routers:
-            self.app.include_router(router.router)        
-    
+            self.app.include_router(router.router)

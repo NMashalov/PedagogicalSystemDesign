@@ -13,31 +13,20 @@ class LoginForm(BaseModel):
     username: str
     password: str
 
+
 class UserRouter(BaseRouter):
-    def __init__(self,pg_session: Session):
+    def __init__(self, pg_session: Session):
         self.user_crud = UserCRUD()
         self.router = APIRouter()
 
     def register_api(self):
-        @self.router.post('/register')
+        @self.router.post("/register")
         def register(form: LoginForm):
-            self.user_crud.create_user(
-                form.username,
-                form.password
-            )
-            
+            self.user_crud.create_user(form.username, form.password)
 
-        @self.router.post('/login')
+        @self.router.post("/login")
         def login(login: LoginForm):
             self.user_crud.log
-            bcrypt.checkpw(LoginForm.password,)
-
-
-
-
-
-
-
-
-
-
+            bcrypt.checkpw(
+                LoginForm.password,
+            )

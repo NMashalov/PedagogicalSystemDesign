@@ -10,21 +10,15 @@ class EventFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = Event
 
-    datetime = factory.Faker(
-        'date_this_month'
-    )
-    store = factory.Faker(
-        'first_name'
-    )
-    type = factory.Faker(
-        'enum',
-        enum_cls=Type
-    )
+    datetime = factory.Faker("date_this_month")
+    store = factory.Faker("first_name")
+    type = factory.Faker("enum", enum_cls=Type)
 
 
 @pytest.fixture(scope="session")
 def start_app():
     return app()
+
 
 @pytest.fixture(scope="session")
 def session_factory(start_app: Store):
@@ -41,11 +35,9 @@ def event_fixture(set_session_for_factories):
     return EventFactory.build_batch(10)
 
 
-@pytest.fixture(scope="session",autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def populate_event_table(session_factory: Session, event_fixture: list[Event]):
-    session_factory.add_all(
-        event_fixture
-    )
+    session_factory.add_all(event_fixture)
     session_factory.commit()
 
 

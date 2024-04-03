@@ -9,6 +9,7 @@ import uvicorn
 import logging
 import typing as tp
 
+
 class EventResponse(BaseModel):
     id: tp.Optional[int] = None
     datetime: datetime
@@ -17,43 +18,41 @@ class EventResponse(BaseModel):
 
 
 class ApiManager:
-    
+
     def __init__(self, crud: Crud):
         self.app = fastapi.FastAPI()
         self.crud = crud
 
-    def register_event_api(self): 
+    def register_event_api(self):
 
         # note that we don't require id
 
-        @self.app.post('/upload')
+        @self.app.post("/upload")
         def upload(q: EventResponse):
             logging.info(q)
 
             return self.crud.upload_event(
-                datetime=q.datetime,
-                store=q.store,
-                type=q.type
+                datetime=q.datetime, store=q.store, type=q.type
             )
 
-        @self.app.get('/check/{record_id}')
-        def check(record_id:int):
+        @self.app.get("/check/{record_id}")
+        def check(record_id: int):
 
             logging.info(record_id)
 
-            event = self.crud.return_event(
-                id=record_id    
-            )
+            event = self.crud.return_event(id=record_id)
 
             if event is not None:
                 return EventResponse(
-                    id = event.id,
+                    id=event.id,
                     datetime=event.datetime,
-                    store = event.store,
-                    type = event.type
+                    store=event.store,
+                    type=event.type,
                 )
             else:
-                raise HTTPException(status_code=404, detail=f"No event with {record_id}")
-            
-    def start_api(self,port=1234):
-        uvicorn.run(self.app,port=port,log_level=logging.DEBUG,host='0.0.0.0')
+                raise HTTPException(
+                    status_code=404, detail=f"No event with {record_id}"
+                )
+
+    def start_api(self, port=1234):
+        uvicorn.run(self.app, port=port, log_level=logging.DEBUG, host="0.0.0.0")

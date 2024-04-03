@@ -5,37 +5,35 @@ from ...auctions import AbstractAuction
 import uuid
 from .crud import BidderCRUD
 
+
 @dataclass
 class Bid:
-    id: int = field(default_factory=uuid.uuid4)
-    amount: int 
+    id: int
+    amount: int
     lot_id: int
     auction_id: int
-    bidder_id: int 
+    bidder_id: int
     timestamp: datetime
 
 
-
-
-
-
 class AuctionCRUD:
-    def __init__(self, session : Redis,auction: AbstractAuction):
+    def __init__(self, session: Redis):
         self.session = session
-        self.auction = auction
 
     @staticmethod
     def bid_to_json(bid: Bid):
         return asdict(bid)
 
     def register_bid(self, bid: Bid):
-        self.session.hmset(bid.id,  self.bid_to_json(bid))   
+        self.session.hmset(bid.id, self.bid_to_json(bid))
+
+    def return_bids(self):
+        yield from self.session.scan_iter("auction_id:*")
 
     def end_auction(self):
-        result = self.auction.inference(
-            key for key in self.session.scan_iter("auction_id:*")
-        )
-        return result 
+        result = self.auction.inference()
+        return result
+
     def clean_bids(self):
-        for key in self.session.scan_iter("auction_id:*"): 
+        for key in self.session.scan_iter("auction_id:*"):
             self.session.delete(key)

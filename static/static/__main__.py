@@ -19,7 +19,7 @@ def main():
 
     class Form(BaseModel):
         username: str
-        password: str
+        password: int
 
     @app.post('/validate')
     def validate_form(form: Form):

@@ -17,6 +17,9 @@ pydantic-settings = "^2.2.1"
 static = 'static.__main__:main'
 
 
+[tool.poetry.group.dev.dependencies]
+requests = "^2.31.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

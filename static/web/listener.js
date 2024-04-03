@@ -12,11 +12,11 @@ async function test_form(formData){
             'Content-Type': 'application/json',
         },
         body: msg,
-    }).then((response) => {
+    }).then(async (response) => {
         if (response.ok) {
             return 1
         } else {
-            console.log(`Response error: ${response.text()}`);
+            console.log(`Response error: ${ await response.text()}`);
             throw new Error(`Server response status code ${response.status}`);
         }
     }    
@@ -29,29 +29,24 @@ async function test_form(formData){
 
 
 formElem.addEventListener('submit', async (e) => {
-    // отмена действия по умолчанию (т.е. не отправляем форму)
-    e.preventDefault()
-    
-    var username = document.getElementById("Username").value
-    var password = document.getElementById("Password").value
+        // отмена действия по умолчанию (т.е. не отправляем форму)
+        e.preventDefault()
+        
+        var username = document.getElementById("Username").value
+        var password = document.getElementById("Password").value
 
-    await test_form({
-        username,
-        password
-    }).
-        then(async (ok) => {
-            console.log(await ok) 
-            if (ok){
-                e.target.submit()
-            } else {
-                alert('Форма не прошла валидацию...')
-            }
-        })
-        .catch(err => console.log(err))
+        await test_form({
+            username,
+            password
+        }).
+            then(async (ok) => {
+                console.log(await ok) 
+                if (ok){
+                    e.target.submit()
+                } else {
+                    alert('Форма не прошла валидацию...')
+                }
+            })
+            .catch(err => console.log(err))
     }
 );
-
-
-
-  //
-

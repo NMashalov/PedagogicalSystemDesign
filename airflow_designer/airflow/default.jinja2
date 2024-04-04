@@ -1,0 +1,27 @@
+# templated on {{now}}
+
+from airflow import DAG
+from airflow.utils.task_group import TaskGroup
+
+
+with DAG(
+    dag_id = "{{dag.name}}",
+    default_args = {
+         'schedule_interval': '{{dag.schedule}}'
+    },
+    tags = "{{dag.tags}}"
+):
+    {%for stage in stages - $}
+    with TaskGroup(group_id='{{stage.stage_name}}') as {{stage.stage_name}}:
+    {%for action on stage.actions%}
+        {{action.action_name}} = Operator(
+            task_id = '{{action_name}}',
+            action_type = '{{action.action_type}}',
+        )
+    {% endfor %}
+
+    {% for action in stage.actions %}
+        {{action.action_name}}{% endfor%}
+    {% endfor %}
+
+    {{dag.stages | join('>>')}}

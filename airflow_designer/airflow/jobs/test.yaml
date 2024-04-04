@@ -1,0 +1,11 @@
+job:
+  time_limit:
+  resource:
+  img: 
+  command: 
+    - sh
+    - c 
+    - |
+      pip install command_line_app &&\
+      command_line_app exec \\
+        {{task_instance.task.params}} 

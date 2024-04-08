@@ -1,1 +1,0 @@
-S3 design is implemented via minio

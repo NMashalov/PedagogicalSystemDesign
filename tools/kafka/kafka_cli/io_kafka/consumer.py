@@ -1,32 +1,26 @@
 from confluent_kafka import Consumer
+from confluent_kafka import cimpl
 from confluent_kafka.serialization import SerializationContext, MessageField
-from kafka_cli.settings import AdaptSettings
-from .base import AbstractProcessor, AbstractAgent
+from .adapter import AdaptSettings
+from .base import AbstractAgent
 
 
-class DeserializerProcessor:
-    def __init__(self, deserializer):
-        self.deserializer = deserializer
-
-    @property
-    def type(self):
-        pass
-
-    @classmethod
-    def from_cfg(cls, ):
-        pass
-
-    def deserialize_message(self, payload):
-        return self.deserializer(payload.value(), SerializationContext(payload.topic(), MessageField.VALUE))
 
 
-class KafkaConsumer(AbstractAgent):
+class KafkaConsumeConn(AbstractAgent):
     def __init__(self, consumer: Consumer, processor: DeserializerProcessor):
         self.consumer = consumer
         self.processor = processor
+
+    def read_n_msg(self, n: int, topic: str):
+        for _ in range(n):
+            self.consumer.poll()
     
     @classmethod
-    def from_params(cls,):
+    def from_settings(cls,):
+        Consumer(
+            AdaptSettings
+        )
         return cls(
             processor
         )

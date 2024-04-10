@@ -1,41 +1,11 @@
 from enum import Enum
+from .pipeline import Pipe
 from .consumer import KafkaConsumer
 from .producer import KafkaProducer
 from .schema import SchemaRegistry
 from .adapter import AdaptSettings
 from .base import PromptType, IoType, ProtocolType
 
-
-
-class Construction:
-    def __init__(self,):
-        self.settings = None
-        self.model = None
-        self.registry
-        KafkaConsumer | KafkaProducer
-
-    def require_settings(self):
-        self.settings = AdaptSettings
-        return self
-
-    def add_serialization(self):
-        SchemaRegistry.from_params()
-        return self
-    
-    def debug(self, ):
-        self.model
-        AdaptSettings()
-        return self
-    
-    def set_role(self): 
-
-        if 
-        
-        SchemaRegistry
-        return self
-    
-    def result():
-       pass
     
 class KafkaManagerException(Exception):
     pass
@@ -50,11 +20,11 @@ class KafkaManager:
     def return_consumer(self):
         pass
     def return_producer(self):
-        pass
+        Pipe().
 
     def complete_model(self):
         try: 
-            self.model = (
+            self.model = Pipe().
                 Construction().
                 require_settings().
                 add_serialization().

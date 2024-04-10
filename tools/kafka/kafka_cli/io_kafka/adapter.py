@@ -1,51 +1,41 @@
-
+from confluent_kafka import Consumer, Producer
 import requests
 from enum import Enum
-from .manager import ProtocolType, IoType
+from .base import ProtocolType, IoType
 from kafka_cli.settings import KafkaSettings
 
 
 class KafkaAdaptException(Exception):
     pass
 
-
-class AdaptSettings:
-    def __init__(self):
-        self.cfg = KafkaSettings()
-
-    @classmethod
-    def validate(cls, protocol: ProtocolType, io: IoType):
-        settings = cls()
-        if (settings.cfg.username is None or settings.cfg.password is None) and (protocol == ProtocolType.sasl):
-            raise KafkaAdaptException(f'{ProtocolType.sasl=} requires not none environ KAFKA_USERNAME and KAFKA_PASSWORD')
-        elif (settings.cfg.registry_url is None) and (io == IoType.avro):
-            raise KafkaAdaptException(f'{IoType.avro=} requires registry')
-        else:
-            return settings
-        
+class SettingsAdapter(KafkaSettings):     
     def return_plaintext_consumer(self):
-        return {
+        return Consumer({
             "auto.offset.reset": "latest",
-        }
+            "bootstrap.servers": self.cfg.server_url,
+        })
     
     def return_plaintext_producer(self):
-        return {
-
-        }
+        return Producer({
+            "bootstrap.servers": self.cfg.server_url,
+        })
     
     def return_sasl_consumer(self):
-        return {
+        return Consumer({
             "auto.offset.reset": "latest",
-            "group.id": f"user.topic"
-        }
+            "sasl.username": self.cfg.username,
+            "sasl.password":  self.cfg.password,
+            "group.id": f"user.topic",
+            "bootstrap.servers": self.cfg.server_url,
+        })
     
     def return_sasl_producer(self):
-        return {
+        return Producer({
             "sasl.mechanism": "SCRAM-SHA-512",
             "security.protocol": "SASL_SSL",
             "sasl.username": self.cfg.username,
             "sasl.password":  self.cfg.password,
-            "bootstrap.servers": ""
-        }
+            "bootstrap.servers": self.cfg.server_url,
+        })
 
 

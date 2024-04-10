@@ -2,8 +2,6 @@ import typing as tp
 import functools
 from collections import OrderedDict
 
-
-
 '''
 Functor is a class as it has a state
 '''

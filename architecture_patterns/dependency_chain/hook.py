@@ -15,11 +15,12 @@ class DbManager:
     def __init__(self):
         self.conn_url = CfgHook()
 
-    def run(self,value=):
+    def run(self,value):
         self.conn_url.set_cfg(value)
 
 
 class StoreManager:
     def __init__(self):
+        pass
 
 

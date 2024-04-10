@@ -34,6 +34,7 @@ def timer():
     start = time.time()
     #test_1()
     #test_2()
+    #asyncio.run(test_3())
     asyncio.run(test_4())
     print(time.time() - start)
 

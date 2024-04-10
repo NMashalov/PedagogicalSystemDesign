@@ -1,57 +1,56 @@
 version: "3"
 services:
-  zookeper:
+  zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    # entrypoint:
+    #   - bash
+    #   - -c
+    #   - |
+    #     ls /etc/kafka/secrets/
+    ports:
+      - "2181:2181"
     environment:
-      ZOOKEPER_CLIENT_PORT: 2181
-      KAFKA_OPTS:  -Djava.security.auth.login.config=/etc/kafka/zookeeper_server_jaas.conf
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEPER_TICK_TIME: 2000
+      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/secrets/zookeeper_jaas.conf"
     volumes:
-      - ./settings/zookeper_jass.conf:/etc/kafka/secrets/zookeper_jass.conf
+      - ./zookeeper_jaas.conf:/etc/kafka/secrets/zookeeper_jaas.conf
+
   brocker:
-    depends_on:
-      - zookeeper
     image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports: 
+      - 19092:19092
     environment:
-      KAFKA_ZOOKEPER_CONNECT: 'zookeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      ZOOKEPER_CLIENT_PORT: 2181
-      KAFKA_OPTS: -Djava.security.auth.login.config=/etc/kafka/zookeeper_server_jaas.conf
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LOCAL 
+      KAFKA_ADVERTISED_LISTENERS: LOCAL://brocker:9092,EXTERNAL://localhost:19092
+      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/secrets/kafka_server_jaas.conf"
     volumes:
-      - ./settings/kafka_server_jass.conf:/etc/kafka/secrets/kafka_server_jass.conf
+      - ./kafka_server_jaas.conf:/etc/kafka/secrets/kafka_server_jaas.conf
 
-  registry:
-    image: confluentinc/cp-schema-registry:5.1.2
-    depends_on:
-      - zookeeper
-    environment:
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
-      SCHEMA_REGISTRY_HOST_NAME: schemaregistry
-      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8085"
+  kafka-ui:
+    image: provectuslabs/kafka-ui
     ports:
-      - 8085:8085
-
-  app:
-    build: ./
-    depends_on:
-      - registry 
-
-
-
-
-  
-
-
-
-    
-  schemaregistry:
-    image: confluentinc/cp-schema-registry:latest
-    depends_on:
-      - brocker
-    depends_on:
-      - zookeeper
+    - "8080:8080"
     environment:
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
-      SCHEMA_REGISTRY_HOST_NAME: schemaregistry
-      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8085"
-    ports:
-      - 8085:8085
+     KAFKA_CLUSTERS_0_NAME: local
+     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:9092
+     KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+     KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
+     #KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
+
+  # registry:
+  #   image: confluentinc/cp-schema-registry:5.1.2
+  #   ports:
+  #     - "8081:8081"
+  #   depends_on:
+  #     - brocker
+  #   environment:
+  #     SCHEMA_REGISTRY_HOST_NAME: schema-registry
+  #     SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'brocker:9092'
+  #     SCHEMA_REGISTRY_KAFKASTORE_URL: 'zookeeper:2181'
+  #     SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081

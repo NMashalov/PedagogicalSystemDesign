@@ -1,7 +1,7 @@
 from confluent_kafka import Consumer
 from confluent_kafka import cimpl
-from confluent_kafka.serialization import SerializationContext, MessageField
-from .adapter import AdaptSettings
+
+from .adapter import AdaptSettings, De
 from .base import AbstractAgent
 
 
@@ -15,6 +15,11 @@ class KafkaConsumeConn(AbstractAgent):
     def read_n_msg(self, n: int, topic: str):
         for _ in range(n):
             self.consumer.poll()
+
+    def research_positions(self):
+        topic = self.consumer.list_topics(topic='topicName')
+        partitions = [
+            TopicPartition('topicName', partition) for partition in list(topic.topics['topicName'].partitions.keys())]
     
     @classmethod
     def from_settings(cls,):

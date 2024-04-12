@@ -1,5 +1,6 @@
 import argparse
 from tester import SaslProducer, SaslConsumer, SaslAdmin
+import asyncio
 
 
 admin = SaslAdmin.from_params(
@@ -27,7 +28,7 @@ for i in range(10):
 consumer = SaslConsumer.from_params(
     url='0.0.0.0:19092',
     username='brocker',
-    password='brocker123',
+    password='brocker12',
     topic='my_topic'
 )
 print(consumer.research_positions())

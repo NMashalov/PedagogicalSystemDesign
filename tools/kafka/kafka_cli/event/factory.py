@@ -1,6 +1,6 @@
 #https://factoryboy.readthedocs.io/en/stable/examples.html
 import factory
-from . import datamodel
+from .event import datamodel
 
 
 class EventFactory(factory.Factory):

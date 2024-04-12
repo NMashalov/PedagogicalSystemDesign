@@ -7,8 +7,8 @@ services:
     #   - -c
     #   - |
     #     ls /etc/kafka/secrets/
-    ports:
-      - "2181:2181"
+    # ports:
+    #   - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEPER_TICK_TIME: 2000
@@ -28,29 +28,47 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LOCAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: LOCAL 
       KAFKA_ADVERTISED_LISTENERS: LOCAL://brocker:9092,EXTERNAL://localhost:19092
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/secrets/kafka_server_jaas.conf"
     volumes:
       - ./kafka_server_jaas.conf:/etc/kafka/secrets/kafka_server_jaas.conf
 
-  kafka-ui:
-    image: provectuslabs/kafka-ui
+  kafdrop:
+    container_name: horton-kafdrop-local
+    image: 'obsidiandynamics/kafdrop:latest'
     ports:
-    - "8080:8080"
+      - '9000:9000'
     environment:
-     KAFKA_CLUSTERS_0_NAME: local
-     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:9092
-     KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
-     KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
+      KAFKA_BROKERCONNECT: brocker:9092
+    depends_on:
+      - brocker
+
+  # kafka-ui:
+  #   image: provectuslabs/kafka-ui
+  #   ports:
+  #   - "8080:8080"
+  #   environment:
+  #    KAFKA_CLUSTERS_0_NAME: local
+  #    KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:9092
+  #    KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+  #    KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
      #KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
 
-  # registry:
-  #   image: confluentinc/cp-schema-registry:5.1.2
-  #   ports:
-  #     - "8081:8081"
-  #   depends_on:
-  #     - brocker
-  #   environment:
-  #     SCHEMA_REGISTRY_HOST_NAME: schema-registry
-  #     SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'brocker:9092'
-  #     SCHEMA_REGISTRY_KAFKASTORE_URL: 'zookeeper:2181'
-  #     SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
+  registry:
+    image: confluentinc/cp-schema-registry:5.1.2
+    ports:
+      - "8081:8081"
+    depends_on:
+      - brocker
+    environment:
+       SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SASL_SSL
+      SCHEMA_REGISTRY_KAFKASTORE_SASL_MECHANISM: OAUTHBEARER
+      SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG: |
+              org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+              username="schemaregistryUser" \
+              password="schemaregistryUser" \
+              metadataServerUrls="https://kafka1:8091,https://kafka2:8092"
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'brocker:9092'
+      SCHEMA_REGISTRY_KAFKASTORE_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081

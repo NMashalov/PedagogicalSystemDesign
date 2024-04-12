@@ -16,9 +16,10 @@ class SaslAdmin:
     def from_params(cls, url: str, username: str, password: str):
         return cls(AdminClient({
             "bootstrap.servers": url,
-            #'sasl.mechanism': 'PLAINTEXT',
-            # "sasl.username": username,
-            # "sasl.password": password
+            'security.protocol': 'PLAINTEXT',
+            'sasl.mechanism': 'PLAIN',
+            "sasl.username": username,
+            "sasl.password": password
         }))
 
     def create_topic(self, topic: str):
@@ -42,9 +43,9 @@ class SaslProducer:
             producer = Producer({
                 'bootstrap.servers': url,
                 'security.protocol': 'PLAINTEXT',
-                #'sasl.mechanism': 'PLAINTEXT',
-                # "sasl.username": username,
-                # "sasl.password": password
+                'sasl.mechanism': 'PLAIN',
+                "sasl.username": username,
+                "sasl.password": password
             }),
             serializer=StringSerializer()
         )

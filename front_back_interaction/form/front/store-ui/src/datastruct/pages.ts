@@ -4,7 +4,8 @@ export enum Routes  {
     event= "event",
     description="description",
     strategy="strategy",
-    settings='settings'
+    settings='settings',
+    map="map"
 }
 
 export type RoutesNames = {

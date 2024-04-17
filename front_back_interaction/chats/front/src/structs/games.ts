@@ -2,7 +2,8 @@
 export enum GamesRoutes {
     guess='guess',
     story='story',
-    draw='draw'
+    draw='draw',
+    complete='complete'
 }
 
 

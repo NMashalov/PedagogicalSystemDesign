@@ -5,4 +5,14 @@ body {
 
 .navbar {
     margin-bottom: 20px;
+
+}
+
+.leaflet-container {
+    width: 700px;
+    height: 700px;
+}
+ 
+.leaflet-routing-container-hide {
+    display: none;
 }

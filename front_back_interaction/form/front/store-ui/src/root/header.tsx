@@ -12,7 +12,8 @@ const routeNames: RoutesNames =  {
   event: 'События',
   strategy: 'Стратегия',
   description: 'Описание',
-  settings: 'Настройки'
+  settings: 'Настройки',
+  map: 'Карта'
 }
 
 {/* <Tab eventKey={Routes.home} title="Главная"/>

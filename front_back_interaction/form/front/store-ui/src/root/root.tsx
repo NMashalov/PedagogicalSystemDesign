@@ -2,6 +2,7 @@ import { Outlet, } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 import { StoreNavbar } from "./header";
 
+import './root.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

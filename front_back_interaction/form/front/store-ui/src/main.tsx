@@ -15,7 +15,7 @@ import Strategy from './pages/strategy/main.tsx'
 import { AllSettings, Settings } from './pages/settings/settings.tsx'
 import { AllDescriptions, StrategyPage } from './pages/strategy/description/description.tsx'
 import { Home } from './pages/home/intro.tsx'
-import ThemeProvider from 'react-bootstrap/esm/ThemeProvider'
+import { MapElement } from './comps/map/map.tsx'
 
 const router = createBrowserRouter([
   {
@@ -62,6 +62,10 @@ const router = createBrowserRouter([
       {
         element: <AllSettings />,
         path: `/${Routes.settings}`,
+      },
+      {
+        element: <MapElement />,
+        path: `/${Routes.map}`,
       }
     ],
   },
@@ -69,12 +73,8 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ThemeProvider
-    breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-    minBreakpoint="xxs"
-  >
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
-  </ThemeProvider>
+
 )

@@ -1,30 +1,27 @@
-import {
-    ActionFunctionArgs,
-    ParamParseKey,
-    Params,
-} from "react-router-dom";
-import { Routes } from "./pages";
+import { SettingsGroup } from "./settings";
 
 export enum StrategyTitle{
-     export='export',
-}
-
-export enum StrategyTag{
-    export='start',
-}
-
-const PathNames = {
-    mdName: `${Routes.strategy}/:mdName`,
-} as const;
-
-export interface LoadMd extends ActionFunctionArgs {
-    params: Params<ParamParseKey<typeof PathNames.mdName>>;
+    export='export',
+    filter='filter',
+    form='form'
 }
 
 
 export interface IStrategy{
     title: StrategyTitle;
-    description: string;
-    tag?: StrategyTag[];
-    markdownUrl: string;
+    brief: string;
+}
+
+export type StrategySettings = {
+    [title in StrategyTitle] : SettingsGroup[]
+}
+
+
+export type StrategyShorts = {
+    [title in StrategyTitle] : string
+}
+
+export enum StageStatus{
+    yes,
+    no
 }

@@ -1,7 +1,17 @@
 export enum Routes  {
-    home='/',
-    panel='/panel',
-    event= "/event",
-    strategy="/strategy",
-    settings='/settings'
+    home='home',
+    panel='panel',
+    event= "event",
+    description="description",
+    strategy="strategy",
+    settings='settings'
 }
+
+export type RoutesNames = {
+    [key in Routes]: string
+}
+
+
+export const mdStrategyFolder = "/strategy_md"
+
+

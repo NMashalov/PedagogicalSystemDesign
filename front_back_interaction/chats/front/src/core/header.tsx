@@ -19,7 +19,7 @@ import {
   } from '@chakra-ui/react'
 
 import logo from '../assets/tree.svg'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Links: Array<INavLink> = [
     {
@@ -73,6 +73,11 @@ export const Header = () => {
     const {colorMode, toggleColorMode} = useColorMode();
 
     const {pathname}= useLocation()
+
+
+    useEffect(() => {
+        console.log(pathname)
+    })
 
     const navigate = useNavigate()
     return (

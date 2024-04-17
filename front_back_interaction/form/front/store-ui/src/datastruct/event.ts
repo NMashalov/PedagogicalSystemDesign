@@ -1,10 +1,3 @@
-import {
-    ActionFunctionArgs,
-    ParamParseKey,
-    Params,
-} from "react-router-dom";
-
-
 export interface IEvent{
     payload: object;
     created_dttm: string;
@@ -24,13 +17,6 @@ export interface IEventResponse {
     response_dttm: string;
 }
 
-const PathNames = {
-    appId: '/todos/:appId',
-} as const;
-
-export interface LoadEvents extends ActionFunctionArgs {
-    params: Params<ParamParseKey<typeof PathNames.appId>>;
-}
 
 
 

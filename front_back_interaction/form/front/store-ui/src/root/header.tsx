@@ -1,13 +1,38 @@
 import {Tabs, Tab, Container, Image, Stack} from "react-bootstrap";
-import  {useNavigate} from  "react-router-dom";
-import { Routes } from "../datastruct/pages";
+import  {useLocation, useNavigate} from  "react-router-dom";
+import { Routes, RoutesNames } from "../datastruct/pages";
 import CarWheel from '../assets/car-wheel.svg'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+const routeNames: RoutesNames =  {
+  home: 'Главная',
+  panel: "Панель",
+  event: 'События',
+  strategy: 'Стратегия',
+  description: 'Описание',
+  settings: 'Настройки'
+}
+
+{/* <Tab eventKey={Routes.home} title="Главная"/>
+        <Tab eventKey={Routes.panel} title="Панель"/>
+        <Tab eventKey={Routes.event} title="События"/>
+        <Tab eventKey={Routes.strategy} title="Стратегия"/>
+        
+ */}
 
 export function StoreNavbar() {
     const navigate = useNavigate()
     const [state, setState] = useState<string>(Routes.home)
+    const [routes] = useState(routeNames)
+
+    const location = useLocation();
+
+    useEffect(() => {
+      console.log(location.pathname.split('/')[1])
+      setState(`/${location.pathname.split('/')[1]}`)
+    },[location])
     
     return (
       <Container>
@@ -24,11 +49,14 @@ export function StoreNavbar() {
           }}
           className="mb-3"
         >
-        <Tab eventKey={Routes.home} title="Главная"/>
-        <Tab eventKey={Routes.panel} title="Панель"/>
-        <Tab eventKey={Routes.event} title="События"/>
-        <Tab eventKey={Routes.strategy} title="Стратегия"/>
-        <Tab eventKey={Routes.settings} title="Настройки"/>
+          {
+            Object.entries(routes).map(
+              ([key,value]) => (
+                <Tab id={key} eventKey={key} title={value}/>
+              )
+            )
+          }
+        
       </Tabs>
     </Container>
     );

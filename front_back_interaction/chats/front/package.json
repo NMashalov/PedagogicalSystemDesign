@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cosmos": "cosmos",
+    "cosmos-export": "cosmos-export"
   },
   "dependencies": {
     "@blocknote/core": "^0.12.4",
@@ -37,6 +39,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "globals": "^15.0.0",
+    "react-cosmos": "^6.1.1",
+    "react-cosmos-plugin-vite": "^6.1.1",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   }

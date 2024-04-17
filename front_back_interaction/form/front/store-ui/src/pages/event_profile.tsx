@@ -1,19 +1,8 @@
 import { useState, useEffect } from 'react';
 import JsonView from '@uiw/react-json-view';
 import {
-    LoaderFunction,
     useLoaderData,
   } from "react-router-dom";
-import { LoadEvents } from '../datastruct/event';
-
-export const eventLoader : LoaderFunction = ({params}: LoadEvents) => {
-    console.log(params.appId)
-    const raw_json = fetch(`http://127.0.0.1:8000/event/${params.appId}`).
-        then(data => data.json()).
-        catch(e => console.log(e))
-    return {raw_json}
-};
-
 
 export const EventProfile = () => {
 

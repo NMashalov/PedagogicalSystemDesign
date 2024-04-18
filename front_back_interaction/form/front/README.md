@@ -1,3 +1,3 @@
 Demo:
 
-https://store-miq6zauex-nikitas-projects-3384206a.vercel.app/
+https://store-4t804dr3k-nikitas-projects-3384206a.vercel.app/

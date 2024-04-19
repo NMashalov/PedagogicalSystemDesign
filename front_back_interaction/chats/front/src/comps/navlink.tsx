@@ -1,28 +1,64 @@
-import { Box, useColorModeValue } from '@chakra-ui/react'
-
+import {Menu,MenuButton, MenuList, MenuItem, Text, Button, Center, VStack, HStack } from '@chakra-ui/react'
+// import { useColorMode } from '@chakra-ui/react'
 import { useNavigate } from 'react-router'
-
-export interface INavLink {
-    route: string,
-    title: string
-}
+import { INavLink,} from '../structs/routes'
+import { useEffect, useState } from 'react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
+import puzzle from '../assets/games/puzzle.svg'
   
+interface NavLinkProps extends INavLink{
+  route: string
+}
 
-export const NavLink = (props: INavLink) => {
+
+
+
+export const NavLink = (props: NavLinkProps ) => {
     const navigate = useNavigate()
+    const [dropdownList,setDrowdownList]= useState(props.items)
+
+    useEffect(
+        () => {
+          setDrowdownList(props.items)
+          console.log(props.items)
+        },
+        [props]
+    )
 
     return (
-      <Box
-        as="a"
-        px={2}
-        py={1}
-        rounded={'md'}
-        _hover={{
-          textDecoration: 'none',
-          bg: useColorModeValue('gray.200', 'gray.700'),
-        }}
-        onClick={() => navigate(props.route)}>
-            {props.title}
-      </Box>
+      <Menu>
+        <MenuButton
+          as={Button}
+          bg='white.100'
+          _hover={{
+              background: "white",
+              color: "teal.500",
+            }}
+          rightIcon={<ChevronDownIcon />}
+        >
+          <HStack>
+            <img src={puzzle} height='30px' width='30px'/>
+            <Text fontSize='1xl'>{props.name}</Text>
+          </HStack>
+        </MenuButton>
+        <MenuList>
+          <VStack>
+          {dropdownList.map(
+              (elem) => 
+                <MenuItem 
+                  key={`${props.name}-${elem}`} 
+                  onClick={()=>navigate(`/${props.route}/${elem}`)}
+                >
+                  <Center>
+                    <Text fontSize='1xl'>{elem}</Text>
+                  </Center>
+                </MenuItem> 
+          )}
+          </VStack>
+        </MenuList>
+      </Menu>
     )
-  }
+}
+      
+
+

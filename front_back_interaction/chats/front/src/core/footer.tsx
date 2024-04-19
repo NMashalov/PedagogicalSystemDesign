@@ -1,17 +1,12 @@
-import { Grid, GridItem } from "@chakra-ui/react"
-import { useNavigate } from "react-router"
+import { Box, Text, Center} from "@chakra-ui/react"
+
 export const Footer = () => {
-    const navigate = useNavigate()
+
     return (
-        <Grid
-            gridTemplateRows={'50px 1fr 30px'}
-        >
-            <GridItem>
-                Список информации
-            </GridItem>
-            <GridItem>
-                <a onClick={() => navigate('/law')}>Правообладателям</a>
-            </GridItem>
-        </Grid>
+        <Box h='200px' w='100%' bgGradient='linear(to-t, blue.100, white)'>
+            <Center>
+                <Text fontSize='3xl'>Список информации</Text>
+            </Center>
+        </Box>
     )
 }

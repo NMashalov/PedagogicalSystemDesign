@@ -1,7 +1,7 @@
-import { Tooltip,Button, Image, Stack, Tag, Text, Flex } from "@chakra-ui/react";
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { Tooltip,Button, Image, VStack, HStack, Tag, Text,StackDivider } from "@chakra-ui/react";
+import { Card, } from '@chakra-ui/react'
 import { useNavigate } from "react-router";
-import { Difficulty, Media } from "../structs/games";
+import { IGameDescription } from "../structs/games";
 const Hint = ({hint} : {hint:string}) => (
     <Tooltip id="button-tooltip">
       {hint}
@@ -34,61 +34,53 @@ function HintButton(buttonProps :IHintButton) {
 function TagGroup({tags}:{tags: Array<string>}){
 
     return(
-        <Flex justifyContent={'center'}>
+        <HStack align={'center'}>
             {tags.map((tag) => (
                 <Tag key={tag}>{tag}</Tag>
             ))}
-        </Flex>
+        </HStack>
     )
 
 }
 
-export interface IGameCard {
-    image: string;
+interface GameCardProps extends  IGameDescription{
     title: string;
-    difficulty: Difficulty;
-    media: Media[];
-    description: string;
-    navigateLink: string;
-    hintText?: string;
-    [key: string]: unknown;
 }
 
 
-export const GameCard = (cardProps : IGameCard) => { 
+
+export const GameCard = (cardProps : GameCardProps) => { 
+
     return (
         <Card  bgGradient='linear(to-b, white, green.500@0.3)' style={{ width: '18rem' }}>
-            <CardHeader>
-                <Text textAlign='center'>
-                    {cardProps.title}
+            <VStack
+                divider={<StackDivider borderColor='gray.200' />}
+                spacing={4}
+            >
+                <Text fontSize='2xl' textAlign='center'>
+                    {cardProps.name}
                 </Text>
-            </CardHeader>
-            <CardBody>
-                <Stack>
-                    <Image
-                        src={cardProps.image} 
-                        borderRadius='lg'
-                    />
-                    <TagGroup tags={[cardProps.difficulty, ...cardProps.media]}/>
-                    <Text  textAlign='center'>
-                        {cardProps.description}
-                    </Text>
-                </Stack>
-            </CardBody>
-            <CardFooter>
-                <Flex  h={16}  alignItems='center' justifyContent='space-between'>
+                <Image
+                    src={cardProps.image} 
+                    borderRadius='lg'
+                />
+                <TagGroup tags={[cardProps.difficulty, ...cardProps.media]}/>
+                <Text  textAlign='center'>
+                    {cardProps.description}
+                </Text>         
+                <HStack align={'center'}>
                     <HintButton
-                        navigateLink={cardProps.navigateLink}
+                        navigateLink={cardProps.title}
                         hintText='Узнать про правила игры'
                         buttonText='Правила'
                     />
                     <HintButton
-                        navigateLink={cardProps.navigateLink}
+                        navigateLink={cardProps.title}
                         hintText='Переход к описанию игры'
                         buttonText='Играть'
                     />
-                </Flex>
-            </CardFooter>
+                </HStack>
+            </VStack>
         </Card>
     )
 }

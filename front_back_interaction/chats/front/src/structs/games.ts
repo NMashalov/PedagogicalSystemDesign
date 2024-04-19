@@ -1,5 +1,4 @@
-
-export enum GamesRoutes {
+export enum GameTitles {
     guess='guess',
     story='story',
     draw='draw',
@@ -13,7 +12,23 @@ export enum Difficulty {
     hard = 'Сложно'
 }
 
+
 export enum Media {
     text = 'Текст',
     image = 'Картинки'
 }
+
+export interface IGameDescription {
+    image: string;
+    name: string;
+    difficulty: Difficulty;
+    media: Media[];
+    description: string;
+    hintText?: string;
+}
+
+export type Games = {
+    [key in GameTitles] : IGameDescription
+}
+
+

@@ -6,12 +6,6 @@ export enum StrategyTitle{
     form='form'
 }
 
-
-export interface IStrategy{
-    title: StrategyTitle;
-    brief: string;
-}
-
 export type StrategySettings = {
     [title in StrategyTitle] : SettingsGroup[]
 }

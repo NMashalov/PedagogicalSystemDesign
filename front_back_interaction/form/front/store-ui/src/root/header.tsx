@@ -1,20 +1,10 @@
-import {Tabs, Tab, Container, Image, Stack} from "react-bootstrap";
-import  {useLocation, useNavigate} from  "react-router-dom";
-import { Routes, RoutesNames } from "../datastruct/pages";
+
 import CarWheel from '../assets/car-wheel.svg'
 import { useEffect, useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const routeNames: RoutesNames =  {
-  home: 'Главная',
-  panel: "Панель",
-  event: 'События',
-  strategy: 'Стратегия',
-  description: 'Описание',
-  settings: 'Настройки',
-  map: 'Карта'
-}
+
+
 
 {/* <Tab eventKey={Routes.home} title="Главная"/>
         <Tab eventKey={Routes.panel} title="Панель"/>
@@ -24,11 +14,10 @@ const routeNames: RoutesNames =  {
  */}
 
 export function StoreNavbar() {
-    const navigate = useNavigate()
+  
     const [state, setState] = useState<string>(Routes.home)
     const [routes] = useState(routeNames)
 
-    const location = useLocation();
 
     useEffect(() => {
       console.log(location.pathname.split('/')[1])

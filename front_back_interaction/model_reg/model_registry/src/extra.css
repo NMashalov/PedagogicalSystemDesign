@@ -1,0 +1,23 @@
+.rotateElem{
+    transform: perspective(100px) rotateX(17deg) rotateY(-40deg) scale3d(1, 1, 1);
+    background-color: orange;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    justify-content: center; /* Align horizontal */
+    align-items: center; 
+    display: flex;
+    transition:
+        transform 2s
+}
+
+.rotateElem:hover{
+    transform: perspective(200px) rotateX(17deg) rotateY(-40deg) scale3d(1, 1, 1);
+    background-color: orange;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    justify-content: center; /* Align horizontal */
+    align-items: center; 
+    display: flex;
+}

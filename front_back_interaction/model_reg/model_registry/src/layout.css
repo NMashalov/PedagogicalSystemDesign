@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+
+
+.body{
+  height:80vh;
+}
+
+.layout{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.preTextIcon{
+  display: inline-block;
+  width: 16px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Style the header */
+.header {
+  height: 2rem;
+  width: 100%;
+  top: 0;
+  margin: 5px;
+  font-family: 'League Mono', sans-serif;  
+  z-index: 999;
+  box-shadow: 0 -6px 10px 5px rgba(0,0,0,0.5);                              
+}
+
+
+.toolBar{
+  height: 1rem;
+  width: 100%;
+}
+
+
+
+
+.hero {
+  background-color: #F7FAFC
+}
+
+.footer {
+    max-width : 20px;
+    height:20px
+}
+
+.sidebar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrap{
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.gutter {
+  background-color: #eee;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.gutter {
+  background-color: #eee;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+}
+
+
+
+

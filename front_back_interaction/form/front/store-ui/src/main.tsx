@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { EventPanel } from './comps/event_table.tsx'
 import { EventSearch } from './comps/event_search.tsx'
-import { Core } from './root/root.tsx'
+import { CoreLayout } from './root/layout.tsx'
 import {EventProfile } from './pages/event_profile.tsx'
 import { Routes } from './datastruct/pages.ts'
 import { eventLoader } from './pages/loaders/event.ts'
@@ -16,11 +16,14 @@ import { AllSettings, Settings } from './pages/settings/settings.tsx'
 import { AllDescriptions, StrategyPage } from './pages/strategy/description/description.tsx'
 import { Home } from './pages/home/intro.tsx'
 import { MapElement } from './comps/map/map.tsx'
+import { ExtractFlow } from './pages/strategy/stages/extract.tsx'
+import './main.css'
+
 
 const router = createBrowserRouter([
   {
     path: `/`,
-    element: <Core />,
+    element: <CoreLayout />,
     children: [
       {
         element: <Home />,
@@ -45,6 +48,10 @@ const router = createBrowserRouter([
         element: <Strategy />,
         path: `/${Routes.strategy}`,
       },
+      {
+          element: <ExtractFlow />,
+          path: `/${Routes.strategy}/extract`,
+      },      
       {
         element: <StrategyPage />,
         path: `${Routes.description}/:stratName`,

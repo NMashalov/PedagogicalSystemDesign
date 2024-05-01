@@ -4,18 +4,45 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { Core } from './core/core';
 import { Intro } from './pages/games/intro';
 import Law from './pages/law.mdx';
-import {theme} from './core/theme'
-import { ColorModeScript, ChakraProvider} from '@chakra-ui/react';
-import { StoryGame } from './pages/games/story';
 
+import { StoryGame } from './pages/games/story';
 import { Routes } from './structs/routes';
 import { GameCore } from './pages/games/base';
-import { CSSReset } from '@chakra-ui/react';
 import { Home } from './pages/home';
 import { GameTitles } from './structs/games';
-import { Canvas } from '@react-three/fiber';
+//import { Canvas } from '@react-three/fiber';
+import { DnDTest } from './pages/test/main';
+import { IntroScene } from './anim/home/scene';
+import { Landing } from './pages/landing';
+
+import './anim/landing.css'
+import { Cube } from './anim/box';
+import { FlowerComp } from './anim/flower';
+import { Caleido } from './pages/games/draw/examples/caleido';
+import { PdfReader } from './pages/pdf/core';
+
 
 const router = createBrowserRouter([
+  {
+    path: "/pdf",
+    element: <PdfReader/>
+  },
+  {
+    path: "/caleido",
+    element: <Caleido/>,
+  },
+  {
+    path: "/landing",
+    element: <Landing />
+  },
+  {
+    path: '/flower',
+    element: <FlowerComp />
+  },
+  {
+    path: "/intro",
+    element:  <IntroScene />
+  },
   {
     path: "/",
     element: <Core />,
@@ -23,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: `/${Routes.home}`,
         element: <Home/>
+      },
+      {
+        path:  '/test',
+        element: <DnDTest/>
       },
       {
         path: `/${Routes.games}`,
@@ -47,11 +78,5 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <CSSReset/>
-        <RouterProvider router={router} />
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-    </ChakraProvider>
-  </React.StrictMode>,
+  <RouterProvider router={router} />
 )

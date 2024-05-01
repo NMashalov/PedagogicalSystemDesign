@@ -9,7 +9,10 @@ export enum Routes  {
 }
 
 export type RoutesNames = {
-    [key in Routes]: string
+    [key in Routes]: {
+        name: string,
+        icon: JSX.Element
+    }
 }
 
 

@@ -1,0 +1,48 @@
+
+.modelCard{
+    margin: 10px;
+    width: 95%;
+    border-radius: 3px;
+    background-color: #e2f7f6;
+    border-left: 1rem solid;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  }
+
+.fileTitle:hover{
+    background-color: #e5e5e5;  
+}
+
+.workspace{
+    background-color: #dff3f2;
+}
+
+.modelImage{
+    right: 0px;
+    background-color: #bff1ee;
+    padding: 10px;
+    width: 40%;
+    height: 400px;
+}
+
+
+.filesystem{
+    box-shadow: 5px 0 5px -5px #333;
+    flex-shrink: 0;
+    /* From https://css.glass */
+    background: rgba(175, 147, 147, 0.35);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.2px);
+    -webkit-backdrop-filter: blur(4.2px);
+    border: 1px solid rgba(175, 147, 147, 0.6);
+}
+
+
+img {
+    max-width: 30px;
+  }
+
+.form {
+    border-radius: 5px;
+    box-shadow: 5px 0 5px -5px #333;
+}

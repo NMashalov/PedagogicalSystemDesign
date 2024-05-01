@@ -6,6 +6,8 @@ import { useFrame, ThreeElements, Canvas } from '@react-three/fiber'
 import { HStack,Text, Box, VStack, StackDivider } from '@chakra-ui/react'
 import { EmojiAvatar } from 'src/comps/emojis/avatar'
 import { BlockNote } from 'src/comps/note'
+import { Excalidraw } from '@excalidraw/excalidraw'
+import { Editor } from '@monaco-editor/react'
 
 
 function BoxThreeD(props: ThreeElements['mesh']) {
@@ -79,9 +81,11 @@ export function Home(){
             bgClip="text"
             bgGradient="linear(to-l, #7928CA,#FF0080)" 
             >
-            Безграничные возможности
+            Безграничные возможности для взаимодействия
           </Text>
           <BlockNote/>
+          {/* <Excalidraw/>   */}
+          <Editor/> 
         </HStack>
     </VStack>
   )

@@ -10,4 +10,16 @@ export default defineConfig({
     mdx(),
     tsconfigPaths(),
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000/',
+        changeOrigin: true,
+      },
+      '/static': {
+        target: 'http://localhost:8000/',
+        changeOrigin: true,
+      },
+    },
+  },
 })

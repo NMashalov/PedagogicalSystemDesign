@@ -1,10 +1,10 @@
 import { Spinner } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {PdfLoader, PdfHighlighter, AreaHighlight, Highlight, Tip, IHighlight, Popup, NewHighlight} from 'react-pdf-highlighter'
 import { test_highlights } from './highlight';
 import { Sidebar } from './sidebar';
 import './comp.css'
-import { useStaticApi } from 'src/api/api';
+
 
 const parseIdFromHash = () => {
   const id = document.location.hash.slice("#highlight-".length);
@@ -34,38 +34,37 @@ const getNextId = () => String(Math.random()).slice(2);
 
 
 export function PdfReader(){
+  const [url] = useState('/static/1970_01.pdf')
 
-    const [highlights,setHighlights] = useState<IHighlight[]>(test_highlights)
+  const [highlights,setHighlights] = useState<IHighlight[]>(test_highlights)
 
-    // const [url]= useState('http://127.0.0.1:8080/static/')
-    // const [{ data, loading,}] = useStaticApi('1970_01.pdf')
 
-    let scrollViewerTo = (highlight: IHighlight) => {}
+  let scrollViewerTo = (highlight: IHighlight) => {}
 
-    const getHighlightById = (id: string) => {
-      const higlight = highlights.find((highlight) => highlight.id === id);
-      console.log(higlight)
-      return higlight
+  const getHighlightById = (id: string) => {
+    const higlight = highlights.find((highlight) => highlight.id === id);
+    console.log(higlight)
+    return higlight
+  }
+
+  const scrollToHighlightFromHash = useCallback(() => {
+    const highlight = getHighlightById(parseIdFromHash());
+    console.log(highlight)
+
+    if (highlight) {
+      console.log('Scroll');
+      scrollViewerTo(highlight);
     }
+  },[scrollViewerTo,getHighlightById]);
 
-    const scrollToHighlightFromHash = () => {
-      const highlight = getHighlightById(parseIdFromHash());
-      console.log(highlight)
-  
-      if (highlight) {
-        console.log('Scroll');
-        scrollViewerTo(highlight);
-      }
-    };
-
-    const resetHighlights = () => {setHighlights([])}
+  const resetHighlights = () => {setHighlights([])}
 
 
-    const addHighlight = (highlight: NewHighlight) => {
-      setHighlights(
-        [{ ...highlight, id: getNextId() }, ...highlights],
-      );
-    }
+  const addHighlight = (highlight: NewHighlight) => {
+    setHighlights(
+      [{ ...highlight, id: getNextId() }, ...highlights],
+    );
+  }
 
     const updateHighlight = (highlightId: string, position: Object, content: Object) => {
       console.log("Updating highlight", highlightId, position, content);
@@ -111,7 +110,6 @@ export function PdfReader(){
           position: "relative",
         }}
       >
-        {data}
         <PdfLoader url={url} beforeLoad={<Spinner />}>
           {(pdfDocument) => (
             <PdfHighlighter

@@ -9,3 +9,5 @@ class QuantPdf:
     setting =  models.TextField(max_length=4000)
 
     file = models.FileField(upload_to="specs")
+
+

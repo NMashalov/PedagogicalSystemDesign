@@ -1,5 +1,4 @@
 import { Tooltip,Button, Image, VStack, HStack, Tag, Text,StackDivider } from "@chakra-ui/react";
-import { Card, } from '@chakra-ui/react'
 import { useNavigate } from "react-router";
 import { IGameDescription } from "../structs/games";
 const Hint = ({hint} : {hint:string}) => (
@@ -52,8 +51,8 @@ interface GameCardProps extends  IGameDescription{
 export const GameCard = (cardProps : GameCardProps) => { 
 
     return (
-        <Card  bgGradient='linear(to-b, white, green.500@0.3)' style={{ width: '18rem' }}>
             <VStack
+                className="card"
                 divider={<StackDivider borderColor='gray.200' />}
                 spacing={4}
             >
@@ -70,17 +69,16 @@ export const GameCard = (cardProps : GameCardProps) => {
                 </Text>         
                 <HStack align={'center'}>
                     <HintButton
-                        navigateLink={cardProps.title}
+                        navigateLink={cardProps.url}
                         hintText='Узнать про правила игры'
                         buttonText='Правила'
                     />
                     <HintButton
-                        navigateLink={cardProps.title}
+                        navigateLink={cardProps.url}
                         hintText='Переход к описанию игры'
                         buttonText='Играть'
                     />
                 </HStack>
             </VStack>
-        </Card>
     )
 }

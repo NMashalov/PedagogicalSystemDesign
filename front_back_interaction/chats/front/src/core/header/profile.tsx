@@ -1,8 +1,11 @@
 import {Avatar, Menu,MenuButton, MenuList, MenuItem,  } from '@chakra-ui/react'
 import panda from '../../assets/cards/panda.svg'
+import { useAtom } from 'jotai'
+import { isLogged } from 'src/store'
 
 
 export const UserProfile = () => {
+    const [_,setLogin]= useAtom(isLogged)
     return (
         <Menu>
             <MenuButton>
@@ -16,8 +19,8 @@ export const UserProfile = () => {
                 <MenuItem>
                     Настройки
                 </MenuItem>
-                <MenuItem>
-                    Настройки
+                <MenuItem onClick={()=>setLogin(false)}>
+                    Выйти
                 </MenuItem>
             </MenuList>
         </Menu>

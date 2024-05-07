@@ -97,6 +97,7 @@ ASGI_APPLICATION = "src.asgi.application"
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -111,8 +112,12 @@ REST_FRAMEWORK = {
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hello_django_dev',
+        'USER': 'hello_django',
+        'PASSWORD': 'hello_django',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 CHANNEL_LAYERS = {

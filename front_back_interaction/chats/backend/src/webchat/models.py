@@ -6,8 +6,8 @@ from django.contrib.sessions.models import Session
 
 class Chat(models.Model):
     id = models.UUIDField(primary_key=True)
-    session_id = models.ForeignKey(Session, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL)
+    session_id = models.ForeignKey(Session, on_delete=models.SET_NULL,  null=True)
+    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_dttm = models.DateTimeField("date published")
 
 class Message(models.Model):

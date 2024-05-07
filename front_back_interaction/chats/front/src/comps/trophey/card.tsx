@@ -1,21 +1,16 @@
-import { Button, Modal, ModalContent,ModalOverlay, useDisclosure } from "@chakra-ui/react"
+import { Button, Text, } from "@chakra-ui/react"
+import { useState } from "react"
 
 
 
+function Card() {
 
-function Helper() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    useState(image)
+   
     return (
-      <>
-        <Button onClick={onOpen}>Open Modal</Button>
-  
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-
-  
-          </ModalContent>
-        </Modal>
-      </>
+      <div className='TropheyCard'>
+        <img src />
+        <Text></Text>
+      </div>
     )
   }

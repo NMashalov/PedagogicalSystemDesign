@@ -4,7 +4,7 @@ import { IHighlight } from "react-pdf-highlighter"
 export const test_highlights: IHighlight[] =  [
     {
         content: {
-          text: " Type Checking for JavaScript",
+          text: "Первая заметка",
         },
         position: {
           boundingRect: {
@@ -25,17 +25,17 @@ export const test_highlights: IHighlight[] =  [
               height: 1200,
             },
           ],
-          pageNumber: 10,
+          pageNumber: 1,
         },
         comment: {
-          text: "Flow or TypeScript?",
+          text: "Мой комментарий",
           emoji: "🔥",
         },
         id: "8245652131754351",
       },
       {
         content: {
-          text: " millions of lines of code atFacebookevery day",
+          text: "Заметка на странице 10",
         },
         position: {
           boundingRect: {
@@ -56,10 +56,10 @@ export const test_highlights: IHighlight[] =  [
               height: 1200,
             },
           ],
-          pageNumber: 1,
+          pageNumber: 10,
         },
         comment: {
-          text: "impressive",
+          text: "Ого",
           emoji: "",
         },
         id: "812807243318874",

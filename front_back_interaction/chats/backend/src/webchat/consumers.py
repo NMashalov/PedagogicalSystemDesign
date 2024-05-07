@@ -1,23 +1,18 @@
 import json
 from django.conf import settings
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
 from openai import AsyncOpenAI
 from webchat.models import Chat, Message
-from webchat.serializers import ChatSerializer
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.http import JsonResponse
 import typing as tp
 # gets API Key from environment variable OPENAI_API_KEY
 
 
-SYSTEM_RULE = '.'.join(
+SYSTEM_RULE = '.'.join([
     'Ты ассистент на детском образовательном сайте',
     'Не ругайся и будь вежлив',
     'Расскажи, что на сайте можно играть в шахматы, рисовать и изучать журнал Квант.',
     'Не отвечай на вопросы не касающиеся навигации.'
-)
-
+])
 
 
 class OpenAIChat:
@@ -44,6 +39,8 @@ class OpenAIChat:
             ],
             stream=True
         )
+    
+
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
@@ -53,9 +50,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.ai_chat = OpenAIChat()
 
     def disconnect(self, close_code):
-        del self.chat()
+        del self.ai_chat
 
-    def create_msg(self, text: str, role: Message.USER | Message.ASSISTANT):
+    def create_msg(self, text: str, role: tp.Literal[Message.USER,Message.ASSISTANT]):
         Message.objects.create(
             chat=self.db_chat,
             role=role,
@@ -80,4 +77,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             full_msg.append(partial_answer)
             self.send(text_data=json.dumps({"message": partial_answer}))
 
-        create_msg
+        self.create_msg(
+            text=''.join(full_msg),
+            role=Message.ASSISTANT
+        )

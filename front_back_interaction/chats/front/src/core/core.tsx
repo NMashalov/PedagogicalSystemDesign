@@ -1,18 +1,21 @@
-import {VStack,StackDivider, ChakraProvider, ColorModeScript, CSSReset} from '@chakra-ui/react';
+import {VStack,StackDivider, ChakraProvider, ColorModeScript, Spacer} from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 import { Footer } from './footer';
 import { Header } from './header/header';
 import { Box } from '@chakra-ui/react'
 import {theme} from './theme'
+import './core.css'
+import { Chat } from 'src/comps/chat/chat';
 
 
 function CoreLayout(){
     return(
-    <VStack 
+    <VStack
         divider={<StackDivider borderColor='gray.200' />}
     >
         <Header/>
-        <Box minH='1200px'>
+        <Box className='content'>
+            <Chat/>
             <Outlet />
         </Box>
         <Footer/>
@@ -26,7 +29,6 @@ export const Core = () => {
 
     return (
         <ChakraProvider theme={theme}>
-            <CSSReset/>
             <CoreLayout/>
             <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         </ChakraProvider>

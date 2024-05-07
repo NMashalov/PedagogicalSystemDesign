@@ -1,3 +1,4 @@
+import { Text } from "@chakra-ui/react";
 import React from "react";
 import type { IHighlight } from "react-pdf-highlighter";
 
@@ -11,26 +12,15 @@ const updateHash = (highlight: IHighlight) => {
   document.location.hash = `highlight-${highlight.id}`;
 };
 
-const APP_VERSION: string = ''
 
 export function Sidebar({
   highlights,
-  toggleDocument,
   resetHighlights,
 }: Props) {
   return (
     <div className="sidebar" style={{ width: "25vw" }}>
       <div className="description" style={{ padding: "1rem" }}>
-        <h2 style={{ marginBottom: "1rem" }}>
-          react-pdf-highlighter {APP_VERSION}
-        </h2>
-
-        <p>
-          <small>
-            To create area highlight hold ⌥ Option key (Alt), then click and
-            drag.
-          </small>
-        </p>
+        <Text>Выделяй текст с помощью кнопки Alt.</Text>
       </div>
 
       <ul className="sidebar__highlights">
@@ -46,7 +36,7 @@ export function Sidebar({
               <strong>{highlight.comment.text}</strong>
               {highlight.content.text ? (
                 <blockquote style={{ marginTop: "0.5rem" }}>
-                  {`${highlight.content.text.slice(0, 90).trim()}…`}
+                  {`${highlight.content.text.slice(0, 90).trim()}...`}
                 </blockquote>
               ) : null}
               {highlight.content.image ? (
@@ -59,17 +49,14 @@ export function Sidebar({
               ) : null}
             </div>
             <div className="highlight__location">
-              Page {highlight.position.pageNumber}
+              Страница заметки {highlight.position.pageNumber}
             </div>
           </li>
         ))}
       </ul>
-      <div style={{ padding: "1rem" }}>
-        <button onClick={toggleDocument}>Toggle PDF document</button>
-      </div>
       {highlights.length > 0 ? (
         <div style={{ padding: "1rem" }}>
-          <button onClick={resetHighlights}>Reset highlights</button>
+          <button onClick={resetHighlights}>Удалить заметки</button>
         </div>
       ) : null}
     </div>

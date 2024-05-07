@@ -1,4 +1,4 @@
-import { NavLink} from "../../comps/navlink";
+import { NavLink} from "./navlink";
 import { useNavigate, useLocation } from "react-router";
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { UserProfile } from "./profile";
@@ -9,12 +9,11 @@ import {
     HStack,
     Text,
     StackDivider,
-    Divider
   } from '@chakra-ui/react'
 
 import logo from '../../assets/tree.svg'
 import { useState } from "react";
-import {navLinks} from './descr'
+import { navLinks } from "src/structs/routes";
 import { RouteNames} from "../../structs/routes";
 
 
@@ -34,6 +33,7 @@ const HeaderBlocks = () => {
                     key = {title} 
                     name={params.name} 
                     items={params.items}
+                    image={params.image}
                 />
             ))}
         </HStack>
@@ -54,24 +54,15 @@ const Logo = () => {
 
 
 export const Header = () => {
-    const {colorMode, toggleColorMode} = useColorMode();
 
     return (
         <HStack
-            justifyContent={'space-evenly'}
-            bgGradient='linear(to-b, blue.100, white)'
-            borderRadius="5px"
-            shadow='md' 
-            borderWidth='1px'
-            padding="20px"
-            width="100%"
+            className="header"
+            justifyContent='space-evenly'
             divider={<StackDivider borderWidth='2px' borderColor='gray.200' />}
         >
             <Logo/> 
             <HeaderBlocks/>
-            <Button onClick={toggleColorMode}>
-                {colorMode === 'light' ?  <MoonIcon/> : <SunIcon/> }
-            </Button>
             <UserProfile/>
         </HStack>        
     )

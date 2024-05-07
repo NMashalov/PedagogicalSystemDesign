@@ -1,8 +1,10 @@
+import boat from "../assets/cards/boat.svg";
+import hedgehog from "../assets/cards/hedgehog.svg";
+import penguins from "../assets/cards/penguins.svg";
 export enum GameTitles {
-    guess='guess',
-    story='story',
+    journal='journal',
     draw='draw',
-    complete='complete'
+    chess='chess'
 }
 
 
@@ -25,6 +27,7 @@ export interface IGameDescription {
     media: Media[];
     description: string;
     hintText?: string;
+    url: string
 }
 
 export type Games = {
@@ -32,3 +35,30 @@ export type Games = {
 }
 
 
+
+export const games : Games = {
+    draw: {
+        image: boat,
+        name: 'Нарисуй',
+        media: [Media.text],
+        description:'Используй современный редактор для наброска' ,
+        difficulty: Difficulty.easy,
+        url: '/draw'
+    },
+    journal: {
+        image: hedgehog,
+        name: 'Интерактивный журнал',
+        media: [Media.text],
+        description: 'Ищи задачи по интересам' ,
+        difficulty: Difficulty.hard,
+        url: '/pdf'
+    },
+    chess: {
+        image: penguins,
+        name: 'Шахматы',
+        media: [Media.image, Media.text],
+        description: 'Сыграй партию' ,
+        difficulty: Difficulty.easy,
+        url: '/chess'
+    }
+}

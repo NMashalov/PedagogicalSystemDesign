@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  kafka:
+    image: confluentinc/cp-kafka
+    ports:
+      - 9093:9093
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,PLAINTEXT://localhost:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+    restart: always
+
+  zookeeper:
+    image: zookeeper
+    restart: always
+
+  kafka-actualizer:
+    image: confluentinc/cp-kafka
+    depends_on:
+      - kafka
+    volumes:
+      - ./wait-for-it.sh:/wait-for-it.sh
+    command: |
+      bash -c '/wait-for-it.sh --timeout=0 -s kafka:9092 && \
+      kafka-topics --create --if-not-exists --topic message --partitions 8 --replication-factor 1 --zookeeper zookeeper:2181 && \
+      exit 0'
+    environment:
+      KAFKA_BROKER_ID: ignored
+      KAFKA_ZOOKEEPER_CONNECT: ignored
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      DYNAMIC_CONFIG_ENABLED: true

@@ -1,6 +1,6 @@
 import { Mosaic, MosaicWindow} from "react-mosaic-component";
 
-import { GraphFlow  } from "./graph";
+import { GraphFlow  } from "./dag_graph";
 
 
 import 'react-mosaic-component/react-mosaic-component.css';
@@ -23,7 +23,7 @@ export function Tile(){
           renderTile={(id, path) => (
             <MosaicWindow<ViewId> 
               path={path} 
-              createNode={() => 'New'}
+        11qa      createNode={() => 'New'}
               title={TITLE_MAP[id]}>
               <GraphFlow />
             </MosaicWindow>

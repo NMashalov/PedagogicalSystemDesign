@@ -156,7 +156,7 @@ const Graph = () => {
   );
 };
 
-export function GraphCompositionFlow(){
+export function GraphComposition1ow(){
   return (
     <div className='dndflow'>
       <ReactFlowProvider>
